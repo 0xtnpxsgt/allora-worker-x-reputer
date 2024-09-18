@@ -1,24 +1,6 @@
 version: "3.8"
 
 services:
-  # rpc-node:
-  #   container_name: rpc-node
-  #   image: "alloranetwork/allora-chain:v0.3.0"
-  #   environment:
-  #     - NETWORK=allora-testnet-1
-  #     - MONIKER=MysticWho
-  #     - APP_HOME=/data
-  #     - HOME=/data
-  #     - STATE_SYNC_RPC1=https://allora-rpc.testnet-1.testnet.allora.network:443
-  #     - STATE_SYNC_RPC2=https://allora-rpc.testnet-1.testnet.allora.network:443
-  #   volumes:
-  #     - ./data_validator:/data
-  #     - ./scripts/:/scripts
-  #   ports:
-  #     - "26656-26657:26656-26657"
-  #   user: "0:0"
-  #   entrypoint: /scripts/l1_node.sh
-
   updater:
     container_name: updater
     build:
@@ -27,7 +9,7 @@ services:
     entrypoint: ["sh", "-c", "while true; do sleep 60; python -u /app/update_app.py; done"]
     environment:
       - TOKENS=ETH:ethereum,BTC:bitcoin,SOL:solana,BNB:binancecoin,ARB:arbitrum
-      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet-1.testnet.allora.network/
+      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
       - DATABASE_PATH=/app/data/prices.db
       - CGC_API_KEY=your_cgc_api_key
     volumes:
@@ -40,7 +22,7 @@ services:
     environment:
       - DATABASE_PATH=/app/data/prices.db
       - API_PORT=8001
-      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet-1.testnet.allora.network/
+      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
       - TOKENS=ETH:ethereum,BTC:bitcoin,SOL:solana
       - INTERVAL_STEPS=10
       - LOOK_BACK=10
@@ -67,7 +49,7 @@ services:
     environment:
       - DATABASE_PATH=/app/data/prices.db
       - API_PORT=8002
-      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet-1.testnet.allora.network/
+      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
       - TOKENS=BNB:binancecoin,ARB:arbitrum
       - INTERVAL_STEPS=20
       - LOOK_BACK=10
@@ -94,7 +76,7 @@ services:
     environment:
       - DATABASE_PATH=/app/data/prices.db
       - API_PORT=8003
-      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet-1.testnet.allora.network/
+      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
       - INTERVAL_STEPS=1440
       - LOOK_BACK=1440
       - PREDICTION_STEPS=1440
@@ -114,8 +96,8 @@ services:
       - ./models:/app/models
     restart: unless-stopped
 
-  node:
-    container_name: node
+  Allora-Worker:
+    container_name: Allora-Worker
     image: alloranetwork/allora-offchain-node:latest
     volumes:
       - ./worker-data:/data

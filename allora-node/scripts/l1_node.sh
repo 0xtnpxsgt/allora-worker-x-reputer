@@ -77,7 +77,7 @@ if [ "x${STATE_SYNC_RPC1}" != "x" ]; then
 fi
 
 echo "Starting validator node"
-/cosmovisor/upgrades/v0.3.0/bin/allorad \
+/cosmovisor/upgrades/v0.4.0/bin/allorad \
     --home=${APP_HOME} \
     start \
     --moniker=${MONIKER} \

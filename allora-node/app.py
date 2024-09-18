@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, Response
+from flask import Flask, Response
 import sqlite3
 import os
 import numpy as np
@@ -6,7 +6,11 @@ from tensorflow.keras.models import load_model
 import joblib
 import asyncio
 import functools
+import json  # Needed for manually creating JSON responses
 from app_config import DATABASE_PATH
+
+# Suppress TensorFlow logging (suppress INFO and WARNING messages)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 app = Flask(__name__)
 
@@ -83,7 +87,8 @@ async def health():
 @app.route('/inference/<token>', methods=['GET'])
 async def get_inference(token):
     if not token:
-        return jsonify({"error": "Token is required"}), HTTP_RESPONSE_CODE_404
+        response = json.dumps({"error": "Token is required"})
+        return Response(response, status=HTTP_RESPONSE_CODE_404, mimetype='application/json')
     
     token_name = f"{token}USD".lower()
 
@@ -92,13 +97,15 @@ async def get_inference(token):
         mean_forecast = await loop.run_in_executor(None, cached_prediction, token_name, PREDICTION_STEPS)
 
         if mean_forecast is None:
-            return jsonify({"error": "No data found or model unavailable for the specified token"}), HTTP_RESPONSE_CODE_404
+            response = json.dumps({"error": "No data found or model unavailable for the specified token"})
+            return Response(response, status=HTTP_RESPONSE_CODE_404, mimetype='application/json')
 
         print(f"{token} inference: {mean_forecast}")
-        return Response(str(mean_forecast), status=HTTP_RESPONSE_CODE_200)
+        return Response(str(mean_forecast), status=HTTP_RESPONSE_CODE_200, mimetype='text/plain')
 
     except Exception as e:
-        return jsonify({"error": str(e)}), HTTP_RESPONSE_CODE_500
+        response = json.dumps({"error": str(e)})
+        return Response(response, status=HTTP_RESPONSE_CODE_500, mimetype='application/json')
 
 @app.route('/truth/<token>/<block_height>', methods=['GET'])
 async def get_price(token, block_height):
@@ -115,9 +122,13 @@ async def get_price(token, block_height):
         result = cursor.fetchone()
 
     if result:
-        return jsonify({'block_height': result[0], 'price': result[1]}), HTTP_RESPONSE_CODE_200
+        # Only return the price in the "body" field as per your desired format
+        response = json.dumps(result[1])  # This will only return the price, not the entire object
+        return Response(response, status=HTTP_RESPONSE_CODE_200, mimetype='application/json')
     else:
-        return jsonify({'error': 'No price data found for the specified token and block_height'}), HTTP_RESPONSE_CODE_404
+        response = json.dumps({'error': 'No price data found for the specified token and block_height'})
+        return Response(response, status=HTTP_RESPONSE_CODE_404, mimetype='application/json')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=API_PORT)

@@ -7,12 +7,12 @@ services:
     environment:
       - DATABASE_PATH=/app/data/prices.db
       - API_PORT=8001
-      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet-1.testnet.allora.network/
+      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
       # - ALLORA_VALIDATOR_API_URL=https://localhost:1317/
       - TOKEN=ETH
       - TOKEN_CG_ID=ethereum
       - WORKER_TYPE=1
-      - CGC_API_KEY=your_cgc_api_key
+      - CGC_API_KEY=CG-4B7ieXZ6Wdq7mz7PPsJkDXpz
     ports:
       - "8001:8001"
     volumes:
