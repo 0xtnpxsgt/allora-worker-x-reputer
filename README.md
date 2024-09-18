@@ -3,7 +3,7 @@ Allora Worker Node x Reputer
 ## 1. Clone the code from this repository
 
 ```bash
-git clone https://github.com/hiephtdev/allora-worker
+git clone https://github.com/0xtnpxsgt/Allora-Worker-x-Reputer.git
 cd allora-worker
 ```
 
