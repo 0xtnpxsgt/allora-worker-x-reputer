@@ -4,7 +4,7 @@ Allora Worker Node x Reputer
 
 ```bash
 git clone https://github.com/0xtnpxsgt/Allora-Worker-x-Reputer.git
-cd allora-worker
+cd Allora-Worker-x-Reputer
 ```
 
 ## 2. Install Docker and necessary libraries
