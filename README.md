@@ -39,3 +39,6 @@ Check Logs to Make Sure its Running
 ```bash
 docker compose logs -f 
 ```
+
+
+Credits to: hiephtdev
