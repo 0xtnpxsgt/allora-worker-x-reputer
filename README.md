@@ -31,6 +31,12 @@ chmod +x ./init.config.sh
 # example: ./init.config.sh "MysticWho" "gospel guess idle vessel motor step xxx xxx xxx xxx xxx xxx" "GC-xxxxxx"
 ```
 
+## 5. Pull the LatestIMAGE
+```bash
+docker compose pull
+```
+
+
 ## 5. Build Your Worker Node
 ```bash
 docker compose up --build -d 
@@ -40,6 +46,3 @@ Check Logs to Make Sure its Running
 ```bash
 docker compose logs -f 
 ```
-
-
-##### Credits to: hiephtdev
