@@ -48,30 +48,12 @@
             }
         },
         {
-            "topicId": 4,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-03:8003/inference/{Token}",
-                "Token": "BTC"
-            }
-        },
-        {
             "topicId": 6,
             "inferenceEntrypointName": "api-worker-reputer",
             "loopSeconds": 5,
             "parameters": {
                 "InferenceEndpoint": "http://source-03:8003/inference/{Token}",
                 "Token": "SOL"
-            }
-        },
-        {
-            "topicId": 7,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
-                "Token": "ETH"
             }
         },
         {
@@ -135,16 +117,6 @@
             }
         },
         {
-            "topicId": 4,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-03:8003/truth/{Token}/{BlockHeight}",
-                "Token": "BTCUSD"
-            }
-        },
-        {
             "topicId": 6,
             "reputerEntrypointName": "api-worker-reputer",
             "loopSeconds": 30,
@@ -152,16 +124,6 @@
             "parameters": {
                 "SourceOfTruthEndpoint": "http://source-03:8003/truth/{Token}/{BlockHeight}",
                 "Token": "SOLUSD"
-            }
-        },
-        {
-            "topicId": 7,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-02:8002/truth/{Token}/{BlockHeight}",
-                "Token": "ETHUSD"
             }
         },
         {
