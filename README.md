@@ -16,7 +16,7 @@ chmod +x init.sh
 
 ## 3. Proceed with the faucet
 
-- Go to the link and paste the Allora wallet address in the format allo1jzvjewf0... https://faucet.testnet-1.testnet.allora.network/
+- Go to the link and paste the Allora wallet address in the format allo1jzvjewf0..https://faucet.testnet-1.testnet.allora.network/
 
 ## 4. Run the worker
 - Run the worker => wait until it reports success, then it’s done.
