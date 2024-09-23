@@ -39,21 +39,12 @@
             }
         },
         {
-            "topicId": 2,
+            "topicId": 7,
             "inferenceEntrypointName": "api-worker-reputer",
             "loopSeconds": 5,
             "parameters": {
                 "InferenceEndpoint": "http://source-03:8003/inference/{Token}",
                 "Token": "ETH"
-            }
-        },
-        {
-            "topicId": 6,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-03:8003/inference/{Token}",
-                "Token": "SOL"
             }
         },
         {
@@ -107,23 +98,13 @@
             }
         },
         {
-            "topicId": 2,
+            "topicId": 7,
             "reputerEntrypointName": "api-worker-reputer",
             "loopSeconds": 30,
             "minStake": 100000,
             "parameters": {
                 "SourceOfTruthEndpoint": "http://source-03:8003/truth/{Token}/{BlockHeight}",
                 "Token": "ETHUSD"
-            }
-        },
-        {
-            "topicId": 6,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-03:8003/truth/{Token}/{BlockHeight}",
-                "Token": "SOLUSD"
             }
         },
         {
