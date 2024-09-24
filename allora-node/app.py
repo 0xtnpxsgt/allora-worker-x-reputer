@@ -2,11 +2,16 @@ from flask import Flask, Response
 import sqlite3
 import os
 import numpy as np
-from tensorflow.keras.models import load_model
+import torch
 import joblib
 import asyncio
 import functools
 import json  # Needed for manually creating JSON responses
+import pandas as pd
+from pytorch_forecasting import TimeSeriesDataSet, TemporalFusionTransformer
+from pytorch_forecasting.data.encoders import NaNLabelEncoder, GroupNormalizer
+from torch.utils.data import DataLoader
+from sklearn.preprocessing import MinMaxScaler
 from app_config import DATABASE_PATH
 
 # Suppress TensorFlow logging (suppress INFO and WARNING messages)
@@ -24,17 +29,37 @@ HTTP_RESPONSE_CODE_200 = 200
 HTTP_RESPONSE_CODE_404 = 404
 HTTP_RESPONSE_CODE_500 = 500
 
-# Load model and scaler
+# Load TFT model and scaler
 def load_model_and_scaler(token_name, prediction_horizon):
-    model_path = f'models/{token_name.lower()}_model_{prediction_horizon}m.keras'
+    model_path = f'models/{token_name.lower()}_tft_model_{prediction_horizon}m.pth'
     scaler_path = f'models/{token_name.lower()}_scaler_{prediction_horizon}m.pkl'
     
     if not os.path.exists(model_path) or not os.path.exists(scaler_path):
         return None, None
     
-    model = load_model(model_path)
+    # Load the PyTorch model
+    model = TemporalFusionTransformer.load_from_checkpoint(model_path)
     scaler = joblib.load(scaler_path)
     return model, scaler
+
+# Prepare the data for TFT model
+def prepare_data_for_tft(data, look_back, prediction_horizon):
+    df = pd.DataFrame(data, columns=['price', 'time_idx'])
+    df['group_id'] = "crypto"
+    
+    dataset = TimeSeriesDataSet(
+        df, 
+        time_idx="time_idx",
+        target="price",
+        group_ids=["group_id"],
+        min_encoder_length=look_back,
+        max_encoder_length=look_back,
+        min_prediction_length=prediction_horizon,
+        max_prediction_length=prediction_horizon,
+        time_varying_unknown_reals=["price"],
+        target_normalizer=MinMaxScaler()  # Use the appropriate scaler
+    )
+    return dataset
 
 # Cache predictions to improve performance
 @functools.lru_cache(maxsize=128)
@@ -47,8 +72,8 @@ def cached_prediction(token_name, prediction_horizon):
     with sqlite3.connect(DATABASE_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT price FROM prices 
-            WHERE token=?
+            SELECT price, block_height FROM prices 
+            WHERE token=? 
             ORDER BY block_height DESC 
             LIMIT ?
         """, (token_name, LOOK_BACK))
@@ -57,26 +82,24 @@ def cached_prediction(token_name, prediction_horizon):
     if not result or len(result) == 0:
         return None
     
-    # Reverse the result to chronological order
-    prices = np.array([x[0] for x in reversed(result)]).reshape(-1, 1)
+    # Prepare the data for TFT
+    dataset = prepare_data_for_tft(result, LOOK_BACK, prediction_horizon)
+    dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
     
-    # Preprocess data
-    scaled_data = scaler.transform(prices)
+    # Set the model to evaluation mode
+    model.eval()
     
-    # Prepare the data in the format expected by the model
-    recent_data = scaled_data.reshape(1, LOOK_BACK, 1)
-    predictions = []
-
-    # Make predictions for the next N minutes
-    for _ in range(PREDICTION_STEPS):
-        pred = model.predict(recent_data)
-        predictions.append(pred[0][0])
-        recent_data = np.append(recent_data[:, 1:, :], pred.reshape(1, 1, 1), axis=1)
-
+    # Inference using the PyTorch model
+    with torch.no_grad():
+        predictions = []
+        for batch in dataloader:
+            pred = model.predict(batch, mode='prediction')
+            predictions.append(pred.numpy())
+    
     # Inverse scaling to get actual prices
     predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 1))
-
-    # Get the mean forecast for the next N minutes
+    
+    # Return the mean forecast
     mean_forecast = np.mean(predictions)
     return mean_forecast
 
