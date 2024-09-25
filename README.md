@@ -4,7 +4,7 @@
 
 ```bash
 git clone https://github.com/0xtnpxsgt/allora-worker-x-reputer.git
-cd allora-worker-x-reputer.
+cd allora-worker-x-reputer
 ```
 
 ## 2. Install Docker and necessary libraries
