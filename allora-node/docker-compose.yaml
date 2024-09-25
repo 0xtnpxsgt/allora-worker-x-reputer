@@ -96,8 +96,8 @@ services:
       - ./models:/app/models
     restart: unless-stopped
 
-  Allora-Worker:
-    container_name: Allora-Worker
+  allora-worker:
+    container_name: allora-worker
     image: alloranetwork/allora-offchain-node:latest
     volumes:
       - ./worker-data:/data
