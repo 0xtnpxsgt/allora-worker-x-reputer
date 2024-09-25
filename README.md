@@ -48,7 +48,17 @@ Check Logs to Make Sure its Running
 ```bash
 docker compose logs -f 
 ```
+
 ------------------------------------------ Congrats Your Setup is Completed -------------------------------------
+
+
+## Now if you want to have your own unique model
+- Play with the train_models.py file
+- to edit run command 
+
+```bash
+nano train_models.py 
+```
 
 ## How to train the model?
 
