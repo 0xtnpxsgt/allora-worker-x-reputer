@@ -3,8 +3,8 @@
 ## 1. Clone the code from this repository
 
 ```bash
-git clone https://github.com/0xtnpxsgt/Allora-Worker-x-Reputer.git
-cd Allora-Worker-x-Reputer
+git clone https://github.com/0xtnpxsgt/allora-worker-x-reputer.git
+cd allora-worker-x-reputer.
 ```
 
 ## 2. Install Docker and necessary libraries
