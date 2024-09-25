@@ -33,7 +33,7 @@ chmod +x ./init.config.sh
 # example: ./init.config.sh "MysticWho" "gospel guess idle vessel motor step xxx xxx xxx xxx xxx xxx" "GC-xxxxxx"
 ```
 
-## 5. Pull the LatestIMAGE
+## 5. Upgrade
 ```bash
 docker compose pull
 ```
