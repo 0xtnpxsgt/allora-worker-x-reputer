@@ -49,7 +49,7 @@ Check Logs to Make Sure its Running
 docker compose logs -f 
 ```
 
------------------------------------------- Congrats Your Setup is Completed -------------------------------------
+---------------------------------------- Congrats Your Setup is Completed -------------------------------------
 
 
 ## Now if you want to have your own unique model
