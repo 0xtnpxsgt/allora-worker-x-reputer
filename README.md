@@ -55,7 +55,7 @@ docker compose logs -f
 - Run Command
 ```bash
 chmod +x ./start-train-model.sh
-./start-train-model.s
+./start-train-model.sh
 ```
 
 
