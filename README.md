@@ -50,8 +50,13 @@ docker compose logs -f
 ```
 ------------ Congrats Your Setup is Completed -----------------
 
-## How to train the model
+## How to train the model?
 
-### Step1: To be continue :) 
+- Run Command
+```bash
+chmod +x ./start-train-model.sh
+./start-train-model.s
+```
+
 
 ###### Credits to hiephtdev
