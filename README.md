@@ -20,7 +20,7 @@ chmod +x init.sh
 
 
 
-## 4. Run the worker
+## 4. Setup Preparation
 - Run the worker => wait until it reports success, then it’s done.
 ```bash
 cd allora-node
