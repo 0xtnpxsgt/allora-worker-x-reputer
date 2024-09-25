@@ -48,5 +48,10 @@ Check Logs to Make Sure its Running
 ```bash
 docker compose logs -f 
 ```
+------------ Congrats Your Setup is Completed -----------------
+
+## How to train the model
+
+### Step1: To be continue :) 
 
 ###### Credits to hiephtdev
