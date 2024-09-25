@@ -48,7 +48,7 @@ Check Logs to Make Sure its Running
 ```bash
 docker compose logs -f 
 ```
------------- Congrats Your Setup is Completed -----------------
+------------------------------------------ Congrats Your Setup is Completed -------------------------------------
 
 ## How to train the model?
 
