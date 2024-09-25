@@ -69,4 +69,4 @@ chmod +x ./start-train-model.sh
 ```
 
 
-###### Credits to hiephtdev
+###### Ccto to hiephtdev
