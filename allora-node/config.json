@@ -1,6 +1,6 @@
 {
     "wallet": {
-        "addressKeyName": "MysticWho",
+        "addressKeyName": "WalletName",
         "addressRestoreMnemonic": "xxx_your_mnemonic_here_xxx",
         "alloraHomeDir": "",
         "gas": "auto",
@@ -39,11 +39,20 @@
             }
         },
         {
-            "topicId": 7,
+            "topicId": 2,
             "inferenceEntrypointName": "api-worker-reputer",
             "loopSeconds": 5,
             "parameters": {
                 "InferenceEndpoint": "http://source-03:8003/inference/{Token}",
+                "Token": "ETH"
+            }
+        },
+        {
+            "topicId": 7,
+            "inferenceEntrypointName": "api-worker-reputer",
+            "loopSeconds": 5,
+            "parameters": {
+                "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
                 "Token": "ETH"
             }
         },
@@ -98,12 +107,22 @@
             }
         },
         {
-            "topicId": 7,
+            "topicId": 2,
             "reputerEntrypointName": "api-worker-reputer",
             "loopSeconds": 30,
             "minStake": 100000,
             "parameters": {
                 "SourceOfTruthEndpoint": "http://source-03:8003/truth/{Token}/{BlockHeight}",
+                "Token": "ETHUSD"
+            }
+        },
+        {
+            "topicId": 7,
+            "reputerEntrypointName": "api-worker-reputer",
+            "loopSeconds": 30,
+            "minStake": 100000,
+            "parameters": {
+                "SourceOfTruthEndpoint": "http://source-02:8002/truth/{Token}/{BlockHeight}",
                 "Token": "ETHUSD"
             }
         },
