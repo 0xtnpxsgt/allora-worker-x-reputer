@@ -27,6 +27,7 @@ cd allora-node
 ```
 
 - If this is your first time, enter the command below, providing the wallet_name, mnemonic - seed phrase of the wallet, and cgc_api_key - API key obtained from CoinGecko
+- Register on Coingecko https://www.coingecko.com/en/developers/dashboard & Create Demo API KEY
 ```bash
 chmod +x ./init.config.sh
 ./init.config.sh "wallet_name" "mnemonic" "cgc_api_key"
