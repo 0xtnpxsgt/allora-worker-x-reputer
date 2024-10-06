@@ -40,7 +40,7 @@ docker compose pull
 ```
 
 
-## 5. Build Your Worker Node
+## 6. Build Your Worker Node
 ```bash
 docker compose up --build -d 
 ```
