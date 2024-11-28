@@ -1,14 +1,19 @@
 {
     "wallet": {
         "addressKeyName": "WalletName",
-        "addressRestoreMnemonic": "xxx_your_mnemonic_here_xxx",
-        "alloraHomeDir": "",
+            "addressRestoreMnemonic": "YourSeedPhrase",
+	"alloraHomeDir": "",
         "gas": "auto",
-        "gasAdjustment": 1.5,
-        "nodeRpc": "https://rpc.ankr.com/allora_testnet",
-        "maxRetries": 3,
-        "delay": 1,
-        "submitTx": true
+        "gasAdjustment": 2.0,
+        "gasPrices": 10,
+        "maxFees": 25000000,
+        "nodeRpc": "https://allora-rpc.testnet.allora.network/",
+        "maxRetries": 5,
+        "retryDelay": 3,
+        "accountSequenceRetryDelay": 5,
+        "submitTx": true,
+        "blockDurationEstimated": 10,
+        "windowCorrectionFactor": 0.8
     },
     "worker": [
         {
@@ -16,8 +21,8 @@
             "inferenceEntrypointName": "api-worker-reputer",
             "loopSeconds": 5,
             "parameters": {
-                "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
-                "Token": "ETH"
+            "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
+            "Token": "ETH"
             }
         },
         {
@@ -25,8 +30,8 @@
             "inferenceEntrypointName": "api-worker-reputer",
             "loopSeconds": 5,
             "parameters": {
-                "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
-                "Token": "BTC"
+            "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
+            "Token": "BTC"
             }
         },
         {
@@ -34,117 +39,9 @@
             "inferenceEntrypointName": "api-worker-reputer",
             "loopSeconds": 5,
             "parameters": {
-                "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
-                "Token": "SOL"
-            }
-        },
-        {
-            "topicId": 2,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-03:8003/inference/{Token}",
-                "Token": "ETH"
-            }
-        },
-        {
-            "topicId": 7,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
-                "Token": "ETH"
-            }
-        },
-        {
-            "topicId": 8,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
-                "Token": "BNB"
-            }
-        },
-        {
-            "topicId": 9,
-            "inferenceEntrypointName": "api-worker-reputer",
-            "loopSeconds": 5,
-            "parameters": {
-                "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
-                "Token": "ARB"
-            }
-        }
-    ],
-    "reputer": [
-        {
-            "topicId": 1,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-01:8001/truth/{Token}/{BlockHeight}",
-                "Token": "ETHUSD"
-            }
-        },
-        {
-            "topicId": 3,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-01:8001/truth/{Token}/{BlockHeight}",
-                "Token": "BTCUSD"
-            }
-        },
-        {
-            "topicId": 5,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-01:8001/truth/{Token}/{BlockHeight}",
-                "Token": "SOLUSD"
-            }
-        },
-        {
-            "topicId": 2,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-03:8003/truth/{Token}/{BlockHeight}",
-                "Token": "ETHUSD"
-            }
-        },
-        {
-            "topicId": 7,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-02:8002/truth/{Token}/{BlockHeight}",
-                "Token": "ETHUSD"
-            }
-        },
-        {
-            "topicId": 8,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-02:8002/truth/{Token}/{BlockHeight}",
-                "Token": "BNBUSD"
-            }
-        },
-        {
-            "topicId": 9,
-            "reputerEntrypointName": "api-worker-reputer",
-            "loopSeconds": 30,
-            "minStake": 100000,
-            "parameters": {
-                "SourceOfTruthEndpoint": "http://source-02:8002/truth/{Token}/{BlockHeight}",
-                "Token": "ARBUSD"
-            }
-        }
-    ]
-}
+            "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
+            "Token": "SOL"
+      }
+    }
+  ]
+}'
