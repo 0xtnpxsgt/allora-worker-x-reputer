@@ -8,21 +8,21 @@ services:
       dockerfile: Dockerfile_updater
     entrypoint: ["sh", "-c", "while true; do sleep 60; python -u /app/update_app.py; done"]
     environment:
-      - TOKENS=ETH:ethereum,BTC:bitcoin,SOL:solana,BNB:binancecoin,ARB:arbitrum
-      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
+      - TOKENS=ETH:ethereum,BTC:bitcoin,SOL:solana
+      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet.allora.network/
       - DATABASE_PATH=/app/data/prices.db
-      - CGC_API_KEY=your_cgc_api_key
+      - CGC_API_KEY=CG-MuKoMVL1JZ8Mv4BhcMYPEF6M
     volumes:
       - ./source-data:/app/data
     restart: unless-stopped
 
   source-01:
     container_name: source-01
-    build: .
+    build: .    
     environment:
       - DATABASE_PATH=/app/data/prices.db
       - API_PORT=8001
-      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
+      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet.allora.network/
       - TOKENS=ETH:ethereum,BTC:bitcoin,SOL:solana
       - INTERVAL_STEPS=10
       - LOOK_BACK=10
@@ -49,13 +49,13 @@ services:
     environment:
       - DATABASE_PATH=/app/data/prices.db
       - API_PORT=8002
-      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
-      - TOKENS=BNB:binancecoin,ARB:arbitrum
-      - INTERVAL_STEPS=20
+      - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet.allora.network/
+      - TOKENS=ETH:ethereum,BNB:binancecoin,ARB:arbitrum
+      - INTERVAL_STEPS=10
       - LOOK_BACK=10
-      - PREDICTION_STEPS=20
+      - PREDICTION_STEPS=10
     ports:
-      - "8002:8002"
+      - "8002:8002"  # Changed to a unique port
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8002"]
       interval: 10s
@@ -64,49 +64,19 @@ services:
     command: >
       sh -c "python init_data.py && gunicorn --preload --bind 0.0.0.0:8002 --log-level info --error-logfile - --access-logfile - 
       --worker-tmp-dir /dev/shm --graceful-timeout 120 --timeout 30 --keep-alive 5 
-      --worker-class gthread --workers 4 --threads 8 app:app"
+      --worker-class gthread --workers 4 --threads 8 app:app"  # Changed to bind to port 8002
     volumes:
       - ./source-data:/app/data
       - ./models:/app/models
     restart: unless-stopped
 
-  source-03:
-    container_name: source-03
-    build: .
-    environment:
-      - DATABASE_PATH=/app/data/prices.db
-      - API_PORT=8003
-      - ALLORA_VALIDATOR_API_URL=https://testnet-allora-rest.rhino-apis.com/
-      - INTERVAL_STEPS=1440
-      - LOOK_BACK=1440
-      - PREDICTION_STEPS=1440
-    ports:
-      - "8003:8003"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8003"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    command: >
-      sh -c "python init_data.py && gunicorn --preload --bind 0.0.0.0:8003 --log-level info --error-logfile - --access-logfile - 
-      --worker-tmp-dir /dev/shm --graceful-timeout 120 --timeout 30 --keep-alive 5 
-      --worker-class gthread --workers 4 --threads 8 app:app"
-    volumes:
-      - ./source-data:/app/data
-      - ./models:/app/models
-    restart: unless-stopped
-
-  allora-worker:
-    container_name: allora-worker
-    image: alloranetwork/allora-offchain-node:latest
+  allora-worker-1:
+    container_name: allora-worker-1
+    image: alloranetwork/allora-offchain-node:v0.5.1
     volumes:
       - ./worker-data:/data
     depends_on:
       source-01:
-        condition: service_healthy
-      source-02:
-        condition: service_healthy
-      source-03:
         condition: service_healthy
     env_file:
       - ./worker-data/env_file
