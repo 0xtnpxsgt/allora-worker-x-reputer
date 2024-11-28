@@ -51,9 +51,9 @@ services:
       - API_PORT=8002
       - ALLORA_VALIDATOR_API_URL=https://allora-api.testnet.allora.network/
       - TOKENS=ETH:ethereum,BNB:binancecoin,ARB:arbitrum
-      - INTERVAL_STEPS=10
+      - INTERVAL_STEPS=20
       - LOOK_BACK=10
-      - PREDICTION_STEPS=10
+      - PREDICTION_STEPS=20
     ports:
       - "8002:8002"  # Changed to a unique port
     healthcheck:
@@ -77,6 +77,8 @@ services:
       - ./worker-data:/data
     depends_on:
       source-01:
+        condition: service_healthy
+      source-02:
         condition: service_healthy
     env_file:
       - ./worker-data/env_file
