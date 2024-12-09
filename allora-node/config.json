@@ -1,24 +1,25 @@
 {
     "wallet": {
         "addressKeyName": "WalletName",
-            "addressRestoreMnemonic": "YourSeedPhrase",
+        "addressRestoreMnemonic": "YourSeedPhrase",
 	"alloraHomeDir": "",
-        "gas": "auto",
-        "gasAdjustment": 2.0,
-        "gasPrices": 10,
-        "maxFees": 25000000,
-        "nodeRpc": "https://allora-rpc.testnet.allora.network/",
-        "maxRetries": 5,
-        "retryDelay": 3,
-        "accountSequenceRetryDelay": 5,
-        "submitTx": true,
-        "blockDurationEstimated": 10,
-        "windowCorrectionFactor": 0.8
+	"gas": "auto",
+   	"gasAdjustment": 1.2,
+    	"gasPrices": "10",
+    	"gasPriceUpdateInterval": 60,
+    	"maxFees": 25000000,
+    	"nodeRpc": "https://allora-rpc.testnet.allora.network",
+   	"maxRetries": 5,
+    	"retryDelay": 3,
+    	"accountSequenceRetryDelay": 5,
+    	"submitTx": true,
+    	"blockDurationEstimated": 10,
+    	"windowCorrectionFactor": 0.8
     },
     "worker": [
         {
             "topicId": 1,
-            "inferenceEntrypointName": "api-worker-reputer",
+            "inferenceEntrypointName": "apiAdapter",
             "loopSeconds": 5,
             "parameters": {
             "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
@@ -27,7 +28,7 @@
         },
         {
             "topicId": 3,
-            "inferenceEntrypointName": "api-worker-reputer",
+            "inferenceEntrypointName": "apiAdapter",
             "loopSeconds": 5,
             "parameters": {
             "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
@@ -36,7 +37,7 @@
         },
         {
             "topicId": 5,
-            "inferenceEntrypointName": "api-worker-reputer",
+            "inferenceEntrypointName": "apiAdapter",
             "loopSeconds": 5,
             "parameters": {
             "InferenceEndpoint": "http://source-01:8001/inference/{Token}",
@@ -45,7 +46,7 @@
         },
         {
             "topicId": 7,
-            "inferenceEntrypointName": "api-worker-reputer",
+            "inferenceEntrypointName": "apiAdapter",
             "loopSeconds": 5,
             "parameters": {
                 "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
@@ -54,7 +55,7 @@
         },
         {
             "topicId": 8,
-            "inferenceEntrypointName": "api-worker-reputer",
+            "inferenceEntrypointName": "apiAdapter",
             "loopSeconds": 5,
             "parameters": {
                 "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
@@ -63,12 +64,13 @@
         },
         {
             "topicId": 9,
-            "inferenceEntrypointName": "api-worker-reputer",
+            "inferenceEntrypointName": "apiAdapter",
             "loopSeconds": 5,
             "parameters": {
                 "InferenceEndpoint": "http://source-02:8002/inference/{Token}",
                 "Token": "ARB"
+          }
+        }
       }
-    }
-  ]
-}
+    ]
+  }
