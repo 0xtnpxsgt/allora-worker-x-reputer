@@ -1,4 +1,4 @@
-## Allora Worker Node x Reputer 
+## Allora Worker Node
 
 ## 1. Clone the code from this repository
 
